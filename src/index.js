@@ -19,6 +19,6 @@ mongoose.connect("mongodb+srv://HarshalJamdar:810Umakant@cluster0.wz2ii.mongodb.
 app.use('/', route)
 
 //
-app.listen(process.env.PORT || 7001, function () {
-    console.log('Express app running on port ' + (process.env.PORT || 7001))
+app.listen(process.env.PORT || 3000, function () {
+    console.log('Express app running on port ' + (process.env.PORT || 3000))
 }); //process.env.PORT- informing what is run time env.(that is version of nodejs here)
