@@ -1,7 +1,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { default: mongoose } = require('mongoose');
+const mongoose  = require('mongoose');
 const app = express();
 const route = require('./routes/route.js');
 
@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 mongoose.connect("mongodb+srv://HarshalJamdar:810Umakant@cluster0.wz2ii.mongodb.net/group05Database", {
-    useNewUrlParser: true
+    useNewUrlParser: true //only will read new cluster formate of mongoDB.
 })
 .then( () => console.log("MongoDb is connected"))
 .catch ( err => console.log(err) )
@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://HarshalJamdar:810Umakant@cluster0.wz2ii.mongodb.
 
 app.use('/', route)
 
-
-app.listen(process.env.PORT || 3000, function () {
-    console.log('Express app running on port ' + (process.env.PORT || 3000))
-});
+//
+app.listen(process.env.PORT || 7001, function () {
+    console.log('Express app running on port ' + (process.env.PORT || 7001))
+}); //process.env.PORT- informing what is run time env.(that is version of nodejs here)
