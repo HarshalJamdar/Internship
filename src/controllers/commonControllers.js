@@ -2,7 +2,6 @@
 
 const internModel = require("../models/internModel")
 const collegeModel = require("../models/collegeModel")
-const mongoose = require('mongoose');
 
 
 //--CREATING COLLEGE
@@ -21,7 +20,7 @@ const createCollege = async function (req, res) {
     let colleges = await collegeModel.findOne({ name : name});
 
     if (arr.length==0) return res.status(400).send({ status: false , msg: "Invalid request. Please provide Details" })
-    
+
     if (!name || !fullName || !logoLink) return res.status(400).send({ status: false , msg: "Input field missing" })
     
     if (name1 == false) return res.status(400).send({ status: false , msg: "Please Enter valid name." });
@@ -54,31 +53,29 @@ const createCollege = async function (req, res) {
       let mobileNo = await internModel.findOne({ mobile : req.body.mobile});
   
       if (arr.length === 0) return res.status(400).send({ status: false, message: "Invalid request. Please provide Details" })
+
       if(!data.name) return res.status(400).send({ status: false, massage: "Name is reqired" });
-      
+
       if(!data.email) return res.status(400).send({ status: false, massage: "Email is required" });
-     
+
       if(!data.mobile) return res.status(400).send({status:false, massage:"moblie number is required"})
-     
-  
-     if(!data.collegeName) return res.status(400).send({status:false, massage:"college Name is required"})
-     
-      
-     if (Name == false) return res.status(400).send({status:false , message: "Please Enter valid name." })
-      
-      
-     if (Email == false) return res.status(400).send({status:false , message: "Please Enter valid email." })
-      
-     if(intern) return res.status(400).send({status: false, message: "email already exist!"})
-      
-      
-     if (Mobile == false) return res.status(400).send({status:false , message: "Please Enter valid mobile number." })
-      
-    if(mobileNo) return res.status(400).send({status: false, message: "mobile number already exist!"})
-      
-    
-      let getData = await collegeModel.findOne({ name: data.collegeName}).select({ _id: 1 });
-      if (!getData) return res.status(404).send({ status: false, message: "Enter a valid college name" });
+
+      if(!data.collegeName) return res.status(400).send({status:false, massage:"college Name is required"})
+
+      if (Name == false) return res.status(400).send({status:false , message: "Please Enter valid name." })
+
+      if (Email == false) return res.status(400).send({status:false , message: "Please Enter valid email." })
+
+      if(intern) return res.status(400).send({status: false, message: "email already exist!"})
+
+      if (Mobile == false) return res.status(400).send({status:false , message: "Please Enter valid mobile number." })
+
+      if(mobileNo) return res.status(400).send({status: false, message: "mobile number already exist!"})
+
+      let getData = await collegeModel.findOne({ name: data.collegeName}).select({ _id: 1 })
+
+      if (!getData) return res.status(404).send({ status: false, message: "Enter a valid college name" })
+
       data.collegeId = getData._id; //adding new element "collegeId" in object data.
       
       let showInterData = await internModel.create(data);
@@ -111,10 +108,12 @@ const createCollege = async function (req, res) {
       const collegeIdFromcollege = college._id;
 
       const internList = await internModel.find({ collegeId: collegeIdFromcollege,isDeleted:false});
-      if (internList.length==0) return res.status(404).send({ status: false, message: `We Did not Have Any Intern With ${info} College` });
+
+      if (internList.length==0) return res.status(404).send({ status: false, message: `We Did not Have Any Intern With ${info} College` })
+
       data["interests"] = [...internList] //copying using spread syntax.
       res.status(200).send({ status: true, data: data });
-  }catch (err) {
+  }catch (err){
     res.status(500).send({  status: false , msg: "Server not responding", error: err.message });
   }
   }
@@ -127,3 +126,32 @@ module.exports.createIntern = createIntern;
 module.exports.createCollege = createCollege;
 
 module.exports.collegeDetails =collegeDetails;
+
+
+
+
+//*****************************************************************************//
+
+//College of Engineering ,Pune
+//https://functionup-stg.s3.ap-south-1.amazonaws.com/uranium/coep.jpg
+
+
+//h.v.desai college of technology, pune
+//https://functionup-stg.s3.ap-south-1.amazonaws.com/uranium/hvdesai-college.jpeg
+
+
+
+
+// {
+//   "name" : "coep",
+//   "fullName" : "College Of Engineering,Pune",
+//   "logoLink" : "https://functionup-stg.s3.ap-south-1.amazonaws.com/uranium/coep.jpg"
+// }
+
+
+// {
+//   "name" : "pqr",
+//   "email" : "pqr1@coep.in",
+//   "mobile" : "9000090033",
+//   "collegeName" : "coep"
+// }
