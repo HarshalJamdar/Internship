@@ -99,11 +99,9 @@ const createCollege = async function (req, res) {
       const college = await collegeModel.findOne({name: info ,isDeleted:false})
       if(!college) return res.status(404).send({status:false , message:"Did not found college with this name."})
 
-      const { name, fullName, logoLink } = college //unpacked properties of college (Destructuring).
-      console.log({ name, fullName, logoLink })
+      const { name, fullName, logoLink } = college 
+     
       const data = { name, fullName, logoLink };
-
-      data["interests"] = []; //In data object we added a key "interest" which is an empty array.
       
       const collegeIdFromcollege = college._id;
 
@@ -111,7 +109,7 @@ const createCollege = async function (req, res) {
 
       if (internList.length==0) return res.status(404).send({ status: false, message: `We Did not Have Any Intern With ${info} College` })
 
-      data["interests"] = [...internList] //copying using spread syntax.
+      data["interests"] = internList 
       res.status(200).send({ status: true, data: data });
   }catch (err){
     res.status(500).send({  status: false , msg: "Server not responding", error: err.message });
@@ -142,13 +140,23 @@ module.exports.collegeDetails =collegeDetails;
 
 
 
+
+
+
+
+
+
+
+
+//***CREATE COLLEGE INPUT***//
+
 // {
 //   "name" : "coep",
 //   "fullName" : "College Of Engineering,Pune",
 //   "logoLink" : "https://functionup-stg.s3.ap-south-1.amazonaws.com/uranium/coep.jpg"
 // }
 
-
+//***CREATE INTERN INPUT***//
 // {
 //   "name" : "pqr",
 //   "email" : "pqr1@coep.in",
